@@ -251,7 +251,6 @@ function openTier(tier) {
 }
 
 // Pronunciation via Free Dictionary API
-var phoneticCache = {};
 function fetchPhonetic(word, callback) {
   if (phoneticCache[word]) { callback(phoneticCache[word]); return; }
   var xhr = new XMLHttpRequest();
@@ -299,7 +298,7 @@ function showWord(tier) {
       var btn = document.getElementById('tier-audio-btn');
       if (result.audio) {
         btn.style.visibility = 'visible';
-        btn.onclick = function() { playAudio(result.audio); };
+        btn.onclick = function() { speakWord(w.word); };
       } else {
         btn.style.visibility = 'hidden';
       }
@@ -373,7 +372,7 @@ function renderQuestion() {
   var q = testQuestions[testIndex];
   (function(qw) {
     var el = document.getElementById('q-phonetic');
-    if (el) { el.textContent = ''; fetchPhonetic(qw.word, function(r) { if (r && r.phon) el.textContent = r.phon; }); }
+    if (el) { el.textContent = ''; var v2 = window.speechSynthesis.getVoices(); }
   })(q);
   // Generate 4 options: 1 correct + 3 random wrong meanings
   var options = [q.meaning];
@@ -498,6 +497,6 @@ document.getElementById('stats-reset').addEventListener('click', function() {
 // Initialize
 updateStats();
 </script>
-<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.3 · 掌握状态与单词绑定</div>
+<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.4 · 换用美式发音TTS</div>
 </body>
 </html>
