@@ -306,7 +306,7 @@ function showWord(tier) {
     }
   });
   var btn = document.getElementById('tier-master');
-  var key = tier + '-' + currentIndex;
+  var key = tier + '-' + w.word;
   if (learnedSet.has(key)) {
     btn.textContent = '已掌握 ✓';
     btn.classList.add('mastered');
@@ -333,7 +333,8 @@ document.getElementById('tier-next').addEventListener('click', function() {
 
 document.getElementById('tier-master').addEventListener('click', function() {
   if (!currentTier) return;
-  var key = currentTier + '-' + currentIndex;
+  var w = getTierWords(currentTier)[currentIndex];
+  var key = currentTier + '-' + w.word;
   if (learnedSet.has(key)) {
     learnedSet.delete(key);
   } else {
@@ -497,6 +498,6 @@ document.getElementById('stats-reset').addEventListener('click', function() {
 // Initialize
 updateStats();
 </script>
-<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.2 · 每次进入随机排序</div>
+<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.3 · 掌握状态与单词绑定</div>
 </body>
 </html>
