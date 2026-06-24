@@ -232,10 +232,19 @@ function getTierWords(tier) {
 }
 
 function openTier(tier) {
-  var words = getTierWords(tier);
+  var all = getTierWords(tier);
+  // Shuffle fresh each time
+  for (var i = all.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = all[i]; all[i] = all[j]; all[j] = tmp;
+  }
+  // Save shuffled order for this session
+  if (tier === 'high') highWords = all;
+  else if (tier === 'mid') midWords = all;
+  else lowWords = all;
   var names = {high:'高频词汇', mid:'中频词汇', low:'低频词汇'};
   document.getElementById('tier-title').textContent = names[tier] || '词汇';
-  document.getElementById('tier-info').textContent = words.length + '词';
+  document.getElementById('tier-info').textContent = all.length + '词';
   currentIndex = 0;
   showWord(tier);
   showScreen('tier-screen');
@@ -488,6 +497,6 @@ document.getElementById('stats-reset').addEventListener('click', function() {
 // Initialize
 updateStats();
 </script>
-<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.1 · 乱序版 · 含音标发音</div>
+<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.2 · 每次进入随机排序</div>
 </body>
 </html>
