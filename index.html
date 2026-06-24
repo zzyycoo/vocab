@@ -61,11 +61,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
 .stat-box .num{font-size:28px;font-weight:700;color:#43a047}
 .stat-box .label{font-size:13px;color:#999;margin-top:4px}
 .section-title{font-size:16px;font-weight:600;color:#333;margin:16px 0 10px;padding-left:4px}
-.progress-section{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.progress-title{font-size:14px;color:#666;margin-bottom:8px}
-.progress-bar-wrap{background:#e8f5e9;border-radius:10px;height:12px;overflow:hidden;margin-bottom:6px}
-.progress-bar-fill{background:linear-gradient(90deg,#43a047,#66bb6a);height:100%;border-radius:10px;transition:width .4s ease}
-.progress-meta{display:flex;justify-content:space-between;font-size:12px;color:#999}
 .empty-msg{text-align:center;color:#999;padding:40px 20px;font-size:15px}
 .back-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .back-row button{background:none;border:none;color:#43a047;font-size:14px;cursor:pointer;padding:4px 0}
@@ -81,33 +76,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
 
 <!-- Home Screen -->
 <div id="home-screen" class="screen active">
-  <div class="progress-section" style="display:none">
-    <div class="progress-title">总进度</div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="total-progress-bar" style="width:0%;pointer-events:none"></div>
-    </div>
-    <div class="progress-meta">
-      <span id="total-learned">0</span>
-      <span id="total-words">3500</span>
-    </div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;pointer-events:none">
-    <div style="background:#fff;border-radius:10px;padding:10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:20px;font-weight:700;color:#43a047" id="prog-high">0</div>
-      <div style="font-size:11px;color:#999">高频</div>
-      <div class="progress-bar-wrap" style="margin-top:6px"><div class="progress-bar-fill" id="bar-high" style="width:0%;background:#43a047"></div></div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:20px;font-weight:700;color:#ff9800" id="prog-mid">0</div>
-      <div style="font-size:11px;color:#999">中频</div>
-      <div class="progress-bar-wrap" style="margin-top:6px"><div class="progress-bar-fill" id="bar-mid" style="width:0%;background:#ff9800"></div></div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:20px;font-weight:700;color:#9c27b0" id="prog-low">0</div>
-      <div style="font-size:11px;color:#999">低频</div>
-      <div class="progress-bar-wrap" style="margin-top:6px"><div class="progress-bar-fill" id="bar-low" style="width:0%;background:#9c27b0"></div></div>
-    </div>
-  </div>
   <div class="section-title">词库分类</div>
   <div class="card card-green" data-tier="high">
     <div class="card-title">高频词汇</div>
@@ -372,7 +340,6 @@ document.getElementById('tier-master').addEventListener('click', function() {
     learnedSet.add(key);
   }
   saveLearned();
-  updateProgress();
   showWord(currentTier);
 });
 
@@ -513,24 +480,6 @@ function updateStats() {
   document.getElementById('stat-accuracy').textContent = testCount > 0 ? Math.round(testCorrect / (testCount * 20) * 100) + '%' : '0%';
 }
 
-function updateProgress() {
-  var highLearned = 0, midLearned = 0, lowLearned = 0;
-  learnedSet.forEach(function(k) {
-    if (k.indexOf('high-') === 0) highLearned++;
-    else if (k.indexOf('mid-') === 0) midLearned++;
-    else if (k.indexOf('low-') === 0) lowLearned++;
-  });
-  var total = learnedSet.size;
-  document.getElementById('total-learned').textContent = total + ' / 3500';
-  document.getElementById('total-progress-bar').style.width = (total / 3500 * 100) + '%';
-  document.getElementById('prog-high').textContent = highLearned;
-  document.getElementById('prog-mid').textContent = midLearned;
-  document.getElementById('prog-low').textContent = lowLearned;
-  document.getElementById('bar-high').style.width = (highLearned / 800 * 100) + '%';
-  document.getElementById('bar-mid').style.width = (midLearned / 1350 * 100) + '%';
-  document.getElementById('bar-low').style.width = (lowLearned / 1350 * 100) + '%';
-}
-
 document.getElementById('stats-reset').addEventListener('click', function() {
   if (confirm('确定要重置所有学习数据吗？')) {
     learnedSet = new Set();
@@ -547,8 +496,7 @@ document.getElementById('stats-reset').addEventListener('click', function() {
 
 // Initialize
 updateStats();
-updateProgress();
 </script>
-<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.7 · 进度条display:none隐藏，测试卡片可点性</div>
+<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.4 · 换用美式发音TTS</div>
 </body>
 </html>
