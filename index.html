@@ -81,17 +81,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Ar
 
 <!-- Home Screen -->
 <div id="home-screen" class="screen active">
-  <div class="progress-section">
+  <div class="progress-section" style="pointer-events:none">
     <div class="progress-title">总进度</div>
     <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="total-progress-bar" style="width:0%"></div>
+      <div class="progress-bar-fill" id="total-progress-bar" style="width:0%;pointer-events:none"></div>
     </div>
     <div class="progress-meta">
       <span id="total-learned">0</span>
       <span id="total-words">3500</span>
     </div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;pointer-events:none">
     <div style="background:#fff;border-radius:10px;padding:10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)">
       <div style="font-size:20px;font-weight:700;color:#43a047" id="prog-high">0</div>
       <div style="font-size:11px;color:#999">高频</div>
@@ -232,13 +232,9 @@ document.querySelectorAll('.tab-item').forEach(function(tab) {
 document.querySelectorAll('[data-tier]').forEach(function(card) {
   card.addEventListener('click', function() {
     var tier = this.getAttribute('data-tier');
-    console.log('[DEBUG] data-tier card clicked, tier:', tier);
-    console.log('[DEBUG] openTier exists:', typeof openTier);
-    console.log('[DEBUG] getTierWords exists:', typeof getTierWords);
     currentTier = tier;
     currentIndex = 0;
     openTier(tier);
-    console.log('[DEBUG] openTier returned, currentTier:', currentTier);
   });
 });
 
