@@ -351,7 +351,7 @@ body {
   <div class="main">
     <div class="section-title">词汇书</div>
 
-    <div class="card" onclick="openTier('high')">
+    <div class="card" data-action="openTier">
       <div class="card-row">
         <div class="card-icon green">🔥</div>
         <div class="card-info">
@@ -366,7 +366,7 @@ body {
       </div>
     </div>
 
-    <div class="card" onclick="openTier('mid')">
+    <div class="card" data-action="openTier">
       <div class="card-row">
         <div class="card-icon blue">📗</div>
         <div class="card-info">
@@ -380,7 +380,7 @@ body {
       </div>
     </div>
 
-    <div class="card" onclick="openTier('low')">
+    <div class="card" data-action="openTier">
       <div class="card-row">
         <div class="card-icon purple">📕</div>
         <div class="card-info">
@@ -397,7 +397,7 @@ body {
 
     <div class="section-title">学习模式</div>
 
-    <div class="card" onclick="openTest()">
+    <div class="card" data-action="openTest">
       <div class="card-row">
         <div class="card-icon orange">✏️</div>
         <div class="card-info">
@@ -408,7 +408,7 @@ body {
       </div>
     </div>
 
-    <div class="card" onclick="openReview()">
+    <div class="card" data-action="openReview">
       <div class="card-row">
         <div class="card-icon green">📝</div>
         <div class="card-info">
@@ -421,7 +421,7 @@ body {
 
     <div class="section-title">我的</div>
 
-    <div class="card" onclick="openMine()">
+    <div class="card" data-action="openMine">
       <div class="card-row">
         <div class="card-icon blue">👤</div>
         <div class="card-info">
@@ -434,16 +434,16 @@ body {
   </div>
 
   <div class="nav-bar">
-    <button class="nav-item active" onclick="showHome()">
+    <button class="nav-item active" data-action="showHome">
       <div class="nav-icon">📚</div>词汇
     </button>
-    <button class="nav-item" onclick="openTest()">
+    <button class="nav-item" data-action="openTest">
       <div class="nav-icon">✏️</div>测试
     </button>
-    <button class="nav-item" onclick="openReview()">
+    <button class="nav-item" data-action="openReview">
       <div class="nav-icon">📝</div>复习
     </button>
-    <button class="nav-item" onclick="openMine()">
+    <button class="nav-item" data-action="openMine">
       <div class="nav-icon">👤</div>我的
     </button>
   </div>
@@ -452,7 +452,7 @@ body {
 <!-- ========== TIER SCREEN (word book detail) ========== -->
 <div id="tier-screen" class="screen">
   <div class="screen-header">
-    <button class="back-btn" onclick="goBack()">←</button>
+    <button class="back-btn" data-action="goBack">←</button>
     <div>
       <div class="screen-title" id="tier-title">高频词汇</div>
       <div class="screen-subtitle" id="tier-sub">点击单词查看释义</div>
@@ -460,7 +460,7 @@ body {
   </div>
   <div class="screen-body">
     <div class="word-card-container">
-      <div class="word-card" id="study-card" onclick="flipCard()">
+      <div class="word-card" id="study-card" data-action="flipCard">
         <div class="word-card-front">
           <div class="word" id="study-word">—</div>
           <div class="pos" id="study-pos">—</div>
@@ -473,9 +473,9 @@ body {
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-outline" onclick="prevWord()">← 上一个</button>
-      <button class="btn btn-green" onclick="markMastered()" id="master-btn">✓ 掌握了</button>
-      <button class="btn btn-outline" onclick="nextWord()">下一个 →</button>
+      <button class="btn btn-outline" data-action="prevWord">← 上一个</button>
+      <button class="btn btn-green" data-action="markMastered" id="master-btn">✓ 掌握了</button>
+      <button class="btn btn-outline" data-action="nextWord">下一个 →</button>
     </div>
     <div style="margin-top:20px">
       <div class="section-title">词汇列表</div>
@@ -487,7 +487,7 @@ body {
 <!-- ========== TEST SCREEN ========== -->
 <div id="test-screen" class="screen">
   <div class="screen-header">
-    <button class="back-btn" onclick="goBack()">←</button>
+    <button class="back-btn" data-action="goBack">←</button>
     <div>
       <div class="screen-title">闯关测试</div>
       <div class="screen-subtitle">每轮 20 题 · 检验学习成果</div>
@@ -513,8 +513,8 @@ body {
         </div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-outline" onclick="goBack()">返回</button>
-        <button class="btn btn-green" onclick="startTest()">再来一轮</button>
+        <button class="btn btn-outline" data-action="goBack">返回</button>
+        <button class="btn btn-green" data-action="startTest">再来一轮</button>
       </div>
     </div>
   </div>
@@ -523,7 +523,7 @@ body {
 <!-- ========== REVIEW SCREEN ========== -->
 <div id="review-screen" class="screen">
   <div class="screen-header">
-    <button class="back-btn" onclick="goBack()">←</button>
+    <button class="back-btn" data-action="goBack">←</button>
     <div>
       <div class="screen-title">错题复习</div>
       <div class="screen-subtitle" id="review-subtitle">0 道易错题待复习</div>
@@ -542,7 +542,7 @@ body {
 <!-- ========== MINE SCREEN ========== -->
 <div id="mine-screen" class="screen">
   <div class="screen-header">
-    <button class="back-btn" onclick="goBack()">←</button>
+    <button class="back-btn" data-action="goBack">←</button>
     <div>
       <div class="screen-title">学习统计</div>
       <div class="screen-subtitle">记录你的每一次进步</div>
@@ -569,7 +569,7 @@ body {
     </div>
 
     <div class="section-title">操作</div>
-    <div class="card" onclick="if(confirm('确定重置所有学习数据？')) resetProgress()">
+    <div class="card" data-action="resetProgress">
       <div class="card-row">
         <div class="card-icon orange">🔄</div>
         <div class="card-info">
@@ -719,11 +719,8 @@ function renderWordList() {
       </div>
       ${stats.learned[w.word] ? '<div class="word-item-mastered"></div>' : ''}
     `;
-    item.onclick = () => {
-      currentIndex = i;
-      showWord();
-      document.querySelector('.screen-body').scrollTop = 0;
-    };
+    item.setAttribute('data-action', 'wordItem');
+    item.setAttribute('data-index', i);
     list.appendChild(item);
   });
 }
@@ -771,14 +768,16 @@ function showQuestion() {
     const btn = document.createElement('button');
     btn.className = 'option';
     btn.textContent = opt.meaning;
-    btn.onclick = () => handleAnswer(btn, opt, q.word);
+    btn.setAttribute('data-action', 'handleAnswer');
+    btn.setAttribute('data-option', opt.meaning);
+    btn.setAttribute('data-correct', q.word.word);
     opts.appendChild(btn);
   });
 }
 
 function handleAnswer(btn, selected, correctWord) {
   const allBtns = document.querySelectorAll('.option');
-  allBtns.forEach(b => { b.classList.add('disabled'); b.onclick = null; });
+  allBtns.forEach(b => { b.classList.add('disabled'); });
 
   if (selected.word === correctWord.word) {
     btn.classList.add('correct');
@@ -859,11 +858,7 @@ function renderReviewList() {
         <div class="word-item-meaning">${w.meaning}</div>
       </div>
     `;
-    item.onclick = () => {
-      // Flip to show meaning
-      item.style.background = 'var(--green-light)';
-      setTimeout(() => item.style.background = '', 600);
-    };
+    item.setAttribute('data-action', 'reviewItem');
     list.appendChild(item);
   });
 }
@@ -884,6 +879,68 @@ function resetProgress() {
   updateHomeStats();
   openMine();
 }
+
+
+// ========== CENTRALIZED EVENT DELEGATION ==========
+document.addEventListener('click', function(e) {
+  // Walk up to find an element with data-action
+  var el = e.target;
+  while (el && el !== document) {
+    var action = el.getAttribute('data-action');
+    if (action) {
+      switch(action) {
+        case 'showHome': showHome(); break;
+        case 'openTest': openTest(); break;
+        case 'openReview': openReview(); break;
+        case 'openMine': openMine(); break;
+        case 'goBack': goBack(); break;
+        case 'flipCard': flipCard(); break;
+        case 'nextWord': nextWord(); break;
+        case 'prevWord': prevWord(); break;
+        case 'markMastered': markMastered(); break;
+        case 'startTest': startTest(); break;
+        case 'openTier': {
+          var tier = el.getAttribute('data-tier');
+          if (tier) openTier(tier);
+          break;
+        }
+        case 'resetProgress': {
+          if (confirm('确定重置所有学习数据？')) resetProgress();
+          break;
+        }
+        // Handle dynamically added options with data-action="handleAnswer"
+        case 'reviewItem': {
+          el.style.background = 'var(--green-light)';
+          setTimeout(function() { el.style.background = ''; }, 600);
+          break;
+        }
+        case 'wordItem': {
+          var idx = parseInt(el.getAttribute('data-index'), 10);
+          if (!isNaN(idx)) {
+            currentIndex = idx;
+            showWord();
+            var sb = document.querySelector('.screen-body');
+            if (sb) sb.scrollTop = 0;
+          }
+          break;
+        }
+        case 'handleAnswer': {
+          var qOpt = el.getAttribute('data-option');
+          var qWord = el.getAttribute('data-correct');
+          if (qOpt && qWord) {
+            // Find matching word object
+            var optObj = testQuestions[testIndex] ? testQuestions[testIndex].options.find(function(o) { return o.meaning === qOpt; }) : null;
+            var wordObj = testQuestions[testIndex] ? testQuestions[testIndex].word : null;
+            if (optObj && wordObj) handleAnswer(el, optObj, wordObj);
+          }
+          break;
+        }
+      }
+      break;
+    }
+    el = el.parentElement;
+  }
+});
 
 // ========== INIT ==========
 async function init() {
@@ -927,7 +984,13 @@ async function init() {
   loadData();
 }
 
-init();
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    init();
+  } catch(e) {
+    console.error('Init error:', e);
+  }
+});
 </script>
 </body>
 </html>
