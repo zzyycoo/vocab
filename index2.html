@@ -436,21 +436,20 @@ function renderQuestion() {
   html += '<div class="quiz-options">';
   for (var o = 0; o < options.length; o++) {
     var cls = 'quiz-option';
+    var isCorrect = (options[o] === q.meaning);
     if (answered !== undefined) {
-      if (options[o] === q.meaning) cls += ' reveal-correct';
-      if (answered === options[o] && options[o] !== q.meaning) cls += ' wrong';
-      if (answered === options[o] && options[o] === q.meaning) cls += ' correct';
+      if (isCorrect) cls += ' correct';
+      else if (options[o] === answered) cls += ' wrong';
     }
-    html += '<div class="' + cls + '" data-meaning="' + options[o].replace(/"/g,'&quot;') + '">' + options[o] + '</div>';
+    html += '<div class="' + cls + '" data-opt="' + o + '" data-correct="' + (isCorrect ? '1' : '0') + '">' + options[o] + '</div>';
   }
   html += '</div></div>';
   document.getElementById('test-content').innerHTML = html;
   if (answered === undefined) {
     document.querySelectorAll('.quiz-option').forEach(function(el) {
       el.addEventListener('click', function() {
-        var chosen = this.getAttribute('data-meaning');
-        testAnswers[testIndex] = chosen;
-        // Prevent further clicks on this question
+        var isCorrect = this.getAttribute('data-correct') === '1';
+        testAnswers[testIndex] = isCorrect ? 'CORRECT' : 'WRONG';
         document.querySelectorAll('.quiz-option').forEach(function(btn) { btn.style.pointerEvents = 'none'; });
         renderQuestion();
         setTimeout(function() {
@@ -464,10 +463,10 @@ function renderQuestion() {
 
 function renderTestResult() {
   testCount++;
-  // Compute score by comparing stored meaning with actual correct meaning
+  // Compute score by counting 'CORRECT' answers
   var finalScore = 0;
   for (var i = 0; i < 20; i++) {
-    if (testQuestions[i] && testAnswers[i] === testQuestions[i].meaning) finalScore++;
+    if (testAnswers[i] === 'CORRECT') finalScore++;
   }
   testCorrect += finalScore;
   localStorage.setItem('testCount', String(testCount));
@@ -549,6 +548,6 @@ function updateProgress() {
   document.getElementById('bar-low').style.width = (lowLearned / 1350 * 100) + '%';
 }
 </script>
-<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.9 · 修复测试选项判断错误（副本）</div>
+<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.10 · 修复测试判断逻辑（副本）</div>
 </body>
 </html>
