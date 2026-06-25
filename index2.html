@@ -438,50 +438,44 @@ function renderQuestion() {
     var cls = 'quiz-option';
     if (answered !== undefined) {
       if (options[o] === q.meaning) cls += ' reveal-correct';
-      if (answered === o && options[o] !== q.meaning) cls += ' wrong';
-      if (answered === o && options[o] === q.meaning) cls += ' correct';
+      if (answered === options[o] && options[o] !== q.meaning) cls += ' wrong';
+      if (answered === options[o] && options[o] === q.meaning) cls += ' correct';
     }
-    html += '<div class="' + cls + '" data-opt="' + o + '" data-meaning="' + options[o].replace(/"/g,'&quot;') + '" data-correct="' + (options[o] === q.meaning ? '1' : '0') + '">' + options[o] + '</div>';
+    html += '<div class="' + cls + '" data-meaning="' + options[o].replace(/"/g,'&quot;') + '">' + options[o] + '</div>';
   }
   html += '</div></div>';
   document.getElementById('test-content').innerHTML = html;
   if (answered === undefined) {
     document.querySelectorAll('.quiz-option').forEach(function(el) {
       el.addEventListener('click', function() {
-        var idx = parseInt(this.getAttribute('data-opt'));
-        var isCorrect = this.getAttribute('data-correct') === '1';
-        testAnswers[testIndex] = idx;
-        if (isCorrect) testScore++;
+        var chosen = this.getAttribute('data-meaning');
+        testAnswers[testIndex] = chosen;
+        // Prevent further clicks on this question
+        document.querySelectorAll('.quiz-option').forEach(function(btn) { btn.style.pointerEvents = 'none'; });
         renderQuestion();
-        // After showing answer, auto advance after 1.5s
         setTimeout(function() {
-          if (testIndex < 20) {
-            testIndex++;
-            renderQuestion();
-          }
+          testIndex++;
+          renderQuestion();
         }, 1500);
       });
     });
-  } else {
-    // Already answered, advance after a moment
-    setTimeout(function() {
-      if (testIndex < 20) {
-        testIndex++;
-        renderQuestion();
-      }
-    }, 1500);
   }
 }
 
 function renderTestResult() {
   testCount++;
-  testCorrect += testScore;
+  // Compute score by comparing stored meaning with actual correct meaning
+  var finalScore = 0;
+  for (var i = 0; i < 20; i++) {
+    if (testQuestions[i] && testAnswers[i] === testQuestions[i].meaning) finalScore++;
+  }
+  testCorrect += finalScore;
   localStorage.setItem('testCount', String(testCount));
   localStorage.setItem('testCorrect', String(testCorrect));
-  var pct = Math.round(testScore / 20 * 100);
+  var pct = Math.round(finalScore / 20 * 100);
   var html = '<div class="quiz-result">';
   html += '<h2 style="font-size:20px;color:#333">测试完成！</h2>';
-  html += '<div class="score">' + testScore + ' / 20</div>';
+  html += '<div class="score">' + finalScore + ' / 20</div>';
   html += '<div class="detail">正确率 ' + pct + '%</div>';
   html += '<button class="btn-primary" id="test-again">再来一次</button>';
   html += '<br><button class="btn-secondary" id="test-home">返回首页</button>';
@@ -555,6 +549,6 @@ function updateProgress() {
   document.getElementById('bar-low').style.width = (lowLearned / 1350 * 100) + '%';
 }
 </script>
-<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.9 · 修复测试选项重复问题（副本）</div>
+<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.9 · 修复测试选项判断错误（副本）</div>
 </body>
 </html>
