@@ -408,15 +408,20 @@ function renderQuestion() {
     var el = document.getElementById('q-phonetic');
     if (el) { el.textContent = ''; fetchPhonetic(qw.word, function(r) { if (r && r.phon) el.textContent = r.phon; }); }
   })(q);
-  // Generate 4 options: 1 correct + 3 random wrong meanings
+  // Generate 4 options: 1 correct + 3 unique random wrong meanings
   var options = [q.meaning];
   var wrongPool = allWords.filter(function(w) { return w.meaning !== q.meaning; });
-  for (var i = wrongPool.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var tmp = wrongPool[i]; wrongPool[i] = wrongPool[j]; wrongPool[j] = tmp;
+  var selectedWrong = [];
+  var maxAttempts = 200, attempts = 0;
+  while (selectedWrong.length < 3 && attempts < maxAttempts) {
+    attempts++;
+    var candidate = wrongPool[Math.floor(Math.random() * wrongPool.length)];
+    if (selectedWrong.indexOf(candidate.meaning) === -1) {
+      selectedWrong.push(candidate.meaning);
+    }
   }
-  for (var k = 0; k < 3 && k < wrongPool.length; k++) {
-    options.push(wrongPool[k].meaning);
+  for (var k = 0; k < selectedWrong.length; k++) {
+    options.push(selectedWrong[k]);
   }
   // Shuffle options
   for (var m = options.length - 1; m > 0; m--) {
@@ -550,6 +555,6 @@ function updateProgress() {
   document.getElementById('bar-low').style.width = (lowLearned / 1350 * 100) + '%';
 }
 </script>
-<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.8 · 进度条（副本测试）</div>
+<div style="text-align:center;font-size:12px;color:#ccc;padding:8px 0;margin-bottom:56px">v1.0.9 · 修复测试选项重复问题（副本）</div>
 </body>
 </html>
